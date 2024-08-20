@@ -369,9 +369,38 @@ Write a valid SQL statement that would produce a result set which would include 
 | Carrot        | North            | 0\.82      | 0\.84         | 0\.02        |
 | Carrot        | South            | 0\.82      | 0\.66         | -0.16        |
 
-**Q 5 (g)  [5 Marks]** 
+### Answer 5.F
 
-Write a valid SQL statement that calculates the average number of items produced per seed planted for each plant type: 
+```sql
+SELECT 
+    PL.`Name` AS `PlantName`,
+    L.`Name` AS `LocationName`,
+    PL.`Water` AS `Needed`,
+    L.`Water` AS `Available`,
+    PL.`Water` - L.`Water` AS `variance`
+FROM
+    `Plant` PL
+INNER JOIN
+    `Location` L ON PL.`LocationId` = L.`LocationId`
+WHERE
+    PL.`Name` = 'Carrot';
+```
+
+### Question 5.G (5 Marks)
+
+Write a valid SQL statement that calculates the average number of items produced per seed planted for each plant type:
+
+```sql
+SELECT 
+    PL.`Name` AS `PlantName`,
+    SUM(`Amount`) / SUM(`Seeds`) AS `AvgItemsPerSeed`
+FROM
+    `Planted` P
+INNER JOIN
+    `Plant` PL ON P.`PlantId` = PL.`PlantId`
+GROUP BY
+    PL.`Name`;
+```
 
 **(25 Marks Total)** 
 
@@ -484,6 +513,104 @@ The Picked relation outlines details of each plant picked by a gardener in a spe
 - PlantID is a Foreign Key references the PlantID in the Plant Relation 
 - GardenerID is a Foreign Key references the GardenerID in the Gardener Relation 
 - LocationID is a Foreign Key references the LocationID in the Location Relation 
-COMP06043 – Databases for Project 
+COMP06043 – Databases for Project
+
+```sql
+-- Create the database
+CREATE DATABASE GardenDB;
+USE GardenDB;
+
+-- Create the Gardener table
+CREATE TABLE Gardener (
+    GardenerID INT PRIMARY KEY,
+    Name VARCHAR(50),
+    Age INT
+);
+
+-- Insert data into the Gardener table
+INSERT INTO Gardener (GardenerID, Name, Age) VALUES
+(0, 'Mother', 36),
+(1, 'Father', 38),
+(2, 'Tim', 15),
+(3, 'Erin', 12);
+
+-- Create the Plant table
+CREATE TABLE Plant (
+    PlantID INT PRIMARY KEY,
+    Name VARCHAR(50),
+    Sunlight DECIMAL(4, 2),
+    Water DECIMAL(4, 2),
+    Weight DECIMAL(4, 2)
+);
+
+-- Insert data into the Plant table
+INSERT INTO Plant (PlantID, Name, Sunlight, Water, Weight) VALUES
+(0, 'Carrot', 0.26, 0.82, 0.08),
+(1, 'Beet', 0.44, 0.80, 0.04),
+(2, 'Corn', 0.44, 0.76, 0.26),
+(3, 'Tomato', 0.42, 0.80, 0.16),
+(4, 'Radish', 0.28, 0.84, 0.02);
+
+-- Create the Location table
+CREATE TABLE Location (
+    LocationID INT PRIMARY KEY,
+    Name VARCHAR(50),
+    Sunlight DECIMAL(4, 2),
+    Water DECIMAL(4, 2)
+);
+
+-- Insert data into the Location table
+INSERT INTO Location (LocationID, Name, Sunlight, Water) VALUES
+(0, 'East', 0.28, 0.80),
+(1, 'North', 0.17, 0.84),
+(2, 'West', 0.38, 0.48),
+(3, 'South', 0.45, 0.66);
+
+-- Create the Planted table
+CREATE TABLE Planted (
+    PlantID INT,
+    GardenerID INT,
+    LocationID INT,
+    Date DATE,
+    Seeds INT,
+    PRIMARY KEY (PlantID, GardenerID, LocationID, Date),
+    FOREIGN KEY (PlantID) REFERENCES Plant(PlantID),
+    FOREIGN KEY (GardenerID) REFERENCES Gardener(GardenerID),
+    FOREIGN KEY (LocationID) REFERENCES Location(LocationID)
+);
+
+-- Insert data into the Planted table
+INSERT INTO Planted (PlantID, GardenerID, LocationID, Date, Seeds) VALUES
+(0, 0, 0, '2005-04-18', 28),
+(0, 1, 1, '2005-04-14', 14),
+(1, 0, 2, '2005-04-18', 36),
+(2, 1, 3, '2005-04-14', 20),
+(2, 2, 2, '2005-04-19', 12),
+(3, 3, 3, '2005-04-25', 38),
+(4, 2, 0, '2005-04-30', 30);
+
+-- Create the Picked table
+CREATE TABLE Picked (
+    PlantID INT,
+    GardenerID INT,
+    LocationID INT,
+    Date DATE,
+    Amount INT,
+    Weight DECIMAL(4, 2),
+    PRIMARY KEY (PlantID, GardenerID, LocationID, Date),
+    FOREIGN KEY (PlantID) REFERENCES Plant(PlantID),
+    FOREIGN KEY (GardenerID) REFERENCES Gardener(GardenerID),
+    FOREIGN KEY (LocationID) REFERENCES Location(LocationID)
+);
+
+-- Insert data into the Picked table
+INSERT INTO Picked (PlantID, GardenerID, LocationID, Date, Amount, Weight) VALUES
+(0, 2, 0, '2005-08-18', 28, 2.32),
+(0, 3, 1, '2005-08-16', 12, 1.02),
+(2, 1, 3, '2005-08-22', 52, 12.96),
+(2, 2, 2, '2005-08-28', 18, 4.58),
+(3, 3, 3, '2005-08-22', 15, 3.84),
+(4, 2, 0, '2005-07-16', 23, 0.52);
+```
 
 Winter Examinations 2021/2022   Page 12 of 12 
