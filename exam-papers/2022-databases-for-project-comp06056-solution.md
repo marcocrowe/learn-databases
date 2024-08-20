@@ -262,22 +262,41 @@ The Final Normalized Tables are:
 - `Department_v1` Table
 - `Job_v1` Table
 
+## Question 5 - Structured Query Language [Total Marks: 25]
 
-***QUESTION 5 – Structured Query Language   [TOTAL MARKS: 25]*** 
+The database relations found in Appendix B are for a simple garden kept by a small family. They plant their garden in the spring and pick their garden in summer. Details of each attribute and a description of each table can be found in Appendix B. Using the relations found in Appendix B perform the following:
 
-The database relations found in Appendix B are for a simple garden kept by a small family. They plant their garden in the spring and pick their garden in summer. Details of each attribute and a description of each table can be found in Appendix B. Using the relations found in Appendix B perform the following: 
+### Question 5.A (3 Marks)
 
-**Q 5(a)  [3 Marks]** 
+Write an SQL command that would recreate the LOCATION table found in Appendix B.
 
-Write an SQL command that would recreate the LOCATION table found in Appendix B. 
+### Answer 5.A
 
-**Q 5(b)  [3 Marks]** 
+```sql
+CREATE TABLE `Location` (
+  `LocationId` Int Not Null,
+  `Name` VarChar(50) Not Null,
+  `Sunlight` Decimal(3,2) Not Null,
+  `Water` Decimal(3,2) Not Null,
+  Primary Key (`LocationId`),
+  Unique Key `Name` (`Name`)
+);
+```
 
-Write a SQL statement to add an onion plant to the PLANT table. Values for the attributes are as follows: 
+### Question 5.B (3 Marks)
 
-PlantID = 5 Name = Onion Sunlight 0.45 Water = 0.74 
+Write a SQL statement to add an onion plant to the PLANT table. Values for the attributes are as follows:
 
-**Q 5(c)  [3 Marks]** 
+PlantID = 5 Name = Onion Sunlight 0.45 Water = 0.74
+
+### Answer 5.B
+
+```sql
+INSERT INTO `Plant` (`PlantId`, `Name`, `Sunlight`, `Water`) 
+VALUES (5, 'Onion', 0.45, 0.74);
+```
+
+### Question 5.C (3 Marks)
 
 Write  a  valid  SQL  statement  that  calculates  the  total  weight  of  all  ears  of  corn (PlantID=2) that were picked from the garden: 
 
@@ -322,7 +341,7 @@ COMP06043 – Databases for Project
 
 Winter Examinations 2021/2022   Page 8 of 12 
 
-**Appendix A** 
+## Appendix A
 
 This UNF table refers to question 4 of your exam paper.  
 
@@ -343,8 +362,7 @@ COMP06043 – Databases for Project
 
 Winter Examinations 2021/2022   Page 9 of 11 
 
-
-**Appendix B** 
+## Appendix B
 
 These relations refer to question 5 of your exam paper.  
 
