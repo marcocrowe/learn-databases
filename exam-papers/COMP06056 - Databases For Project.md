@@ -66,13 +66,13 @@ Given the **PatientAppointment** relation and business rules below outline the f
 
 
 
-|**AppointmentNo** |**PatientID** |**DateofApp** |**TimeofApp** |**Doctor** |
-| - | - | - | - | - |
-|1 |3 |01/12/2022 |11:00 |Mark Twain |
-|2 |2 |01/12/2022 |11:00 |Harry O’ Brien |
-|3 |1 |02/12/2022 |09:00 |Harry O’ Brien |
-|4 |2 |02/12/2022 |09:30 |Harry O’ Brien |
-|5 |1 |02/12/2022 |16:00 |Harry O’ Brien |
+| **AppointmentNo** | **PatientID** | **DateofApp** | **TimeofApp** | **Doctor**     |
+|-------------------|---------------|---------------|---------------|----------------|
+| 1                 | 3             | 01/12/2022    | 11:00         | Mark Twain     |
+| 2                 | 2             | 01/12/2022    | 11:00         | Harry O’ Brien |
+| 3                 | 1             | 02/12/2022    | 09:00         | Harry O’ Brien |
+| 4                 | 2             | 02/12/2022    | 09:30         | Harry O’ Brien |
+| 5                 | 1             | 02/12/2022    | 16:00         | Harry O’ Brien |
 
 **Business Rules:** 
 
@@ -100,23 +100,168 @@ Draw a single Entity Relationship Diagram to represent the above case study. Rem
 
 **[End of Question 3]** 
 
-***QUESTION 4 – Normalisation   [TOTAL MARKS: 25]*** 
+## Question 4 - Normalisation [Total Marks: 25]
 
-The table found in Appendix A contains information in unNormalised form.  It outlines the details of Employees, the department they work in and the job that they are working on.  
+The table found in below contains information in unNormalised form.  It outlines the details of Employees, the department they work in and the job that they are working on.  
+
+*UNF table*  
+
+| Employee Code | Last Name | Education Code | Education Description  | Year Earned | Department Code | Department Name | Job Class | Job  Title   | Birth Date | Hire Date  | Salary  |
+|:--------------|:----------|:---------------|:-----------------------|:------------|:----------------|:----------------|:----------|--------------|------------|------------|---------|
+| 1003          | Rainsford | SC             | Secondary School       | 1982        | MKTG            | Marketing       | 23        | Sales Agent  | 20/03/1970 | 14/09/2003 | 165,000 |
+|               |           | BBA            | Bachelor of Business   | 1988        |                 |                 |           |              |            |            |         |
+|               |           | MBA            | Masters Business       | 1993        |                 |                 |           |              |            |            |         |
+|               |           |                |                        |             |                 |                 |           |              |            |            |         |
+| 1006          | Smith     | SC             | Secondary School       | 1972        | MIS             | Info Systems    | 27        | Sys. Analyst | 13/12/1990 | 12/01/2002 | 95,000  |
+|               |           | BSComp         | Bachelor of  Computing | 1976        |                 |                 |           |              |            |            |         |
+|               |           | BEd            | Bachelor of  Education | 1997        |                 |                 |           |              |            |            |         |
+|               |           |                |                        |             |                 |                 |           |              |            |            |         |
+| 1010          | Thompson  | SC             | Secondary School       | 1982        | MKTG            | Marketing       | 23        | Sales Agent  | 19/06/2000 | 12/04/2005 | 76,000  |
+|               |           | Bed            | Bachelor of  Education | 1988        |                 |                 |           |              |            |            |         |
 
 **Examine** the table found in Appendix A and **perform** the following:  
 
-**Q 4(a)  [17 Marks]** 
+1. Normalise the Relation found above using 1st, 2nd and 3rd normal form rules.  Clearly illustrate the Relations(s) and data in 1st, 2nd and 3rd normal form. **(17 Marks)**
+2. Identify the primary key attribute(s) at each stage of normalization. **(5 Marks)**
+3. Identify potential names for new tables. Names should reflect the content in each relation. **(3 Marks)**
 
-Normalise the Relation found above using 1st, 2nd and 3rd normal form rules**.**  Clearly illustrate the Relations(s) and data in 1st, 2nd and 3rd normal form.  
+## Answer 4
 
-**Q 4(b)  [5 Marks]** Identify the primary key attribute(s) at each stage of normalization. 
+**First Normal Form (1NF)**  
 
-**Q 4(c)  [3 Marks]** 
+To achieve 1NF, we ensure that each field contains only atomic (indivisible) values. In your UNF table, you have handled this correctly by listing each employee’s educational details in separate rows.
 
-Identify potential names for new tables. Names should reflect the content in each relation. 
+Here is the correct 1NF table (same as your UNF table):
 
-***[End of Question 4]*** 
+An example of an un-atomic value would be if you had a single field for the employee’s full name, e.g. "John Doe". This would need to be split into two fields, one for the first name and one for the last name.
+
+| Employee Code | Last Name | Education Code | Education Description  | Year Earned | Department Code | Department Name | Job Class | Job  Title   | Birth Date | Hire Date  |  Salary |
+|:--------------|:----------|:---------------|:-----------------------|------------:|:----------------|:----------------|:----------|--------------|------------|------------|--------:|
+| 1003          | Rainsford | SC             | Secondary School       |        1982 | MKTG            | Marketing       | 23        | Sales Agent  | 20/03/1970 | 14/09/2003 | 165,000 |
+| 1003          | Rainsford | BBA            | Bachelor of Business   |        1988 | MKTG            | Marketing       | 23        | Sales Agent  | 20/03/1970 | 14/09/2003 | 165,000 |
+| 1003          | Rainsford | MBA            | Masters Business       |        1993 | MKTG            | Marketing       | 23        | Sales Agent  | 20/03/1970 | 14/09/2003 | 165,000 |
+| 1006          | Smith     | SC             | Secondary School       |        1972 | MIS             | Info Systems    | 27        | Sys. Analyst | 13/12/1990 | 12/01/2002 |  95,000 |
+| 1006          | Smith     | BSComp         | Bachelor of  Computing |        1976 | MIS             | Info Systems    | 27        | Sys. Analyst | 13/12/1990 | 12/01/2002 |  95,000 |
+| 1006          | Smith     | BEd            | Bachelor of  Education |        1997 | MIS             | Info Systems    | 27        | Sys. Analyst | 13/12/1990 | 12/01/2002 |  95,000 |
+| 1010          | Thompson  | SC             | Secondary School       |        1982 | MKTG            | Marketing       | 23        | Sales Agent  | 19/06/2000 | 12/04/2005 |  76,000 |
+| 1010          | Thompson  | Bed            | Bachelor of  Education |        1988 | MKTG            | Marketing       | 23        | Sales Agent  | 19/06/2000 | 12/04/2005 |  76,000 |
+
+**Second Normal Form (2NF)**  
+
+To find first normal form, we need to remove the repeating groups and create a separate table for the repeating groups.
+
+Sorted the columns in the table to make it easier to identify the functional dependencies.
+
+`UNF table`  
+
+| Employee Code | Last Name | Department Code | Department Name | Job Class | Job Title    | Birth Date | Hire Date  |  Salary | Education Code | Education Description | Year Earned |
+|---------------|-----------|-----------------|-----------------|-----------|--------------|------------|------------|--------:|----------------|-----------------------|------------:|
+| 1003          | Rainsford | MKTG            | Marketing       | 23        | Sales Agent  | 20/03/1970 | 14/09/2003 | 165,000 | SC             | Secondary School      |        1982 |
+| 1003          | Rainsford | MKTG            | Marketing       | 23        | Sales Agent  | 20/03/1970 | 14/09/2003 | 165,000 | BBA            | Bachelor of Business  |        1988 |
+| 1003          | Rainsford | MKTG            | Marketing       | 23        | Sales Agent  | 20/03/1970 | 14/09/2003 | 165,000 | MBA            | Masters Business      |        1993 |
+| 1006          | Smith     | MIS             | Info Systems    | 27        | Sys. Analyst | 13/12/1990 | 12/01/2002 |  95,000 | SC             | Secondary School      |        1972 |
+| 1006          | Smith     | MIS             | Info Systems    | 27        | Sys. Analyst | 13/12/1990 | 12/01/2002 |  95,000 | BSComp         | Bachelor of Computing |        1976 |
+| 1006          | Smith     | MIS             | Info Systems    | 27        | Sys. Analyst | 13/12/1990 | 12/01/2002 |  95,000 | BEd            | Bachelor of Education |        1997 |
+| 1010          | Thompson  | MKTG            | Marketing       | 23        | Sales Agent  | 19/06/2000 | 12/04/2005 |  76,000 | SC             | Secondary School      |        1982 |
+| 1010          | Thompson  | MKTG            | Marketing       | 23        | Sales Agent  | 19/06/2000 | 12/04/2005 |  76,000 | Bed            | Bachelor of Education |        1988 |
+
+**Breaking the UNF table into sub tables**  
+
+`Employee_v1` Table
+
+| Employee Code | Last Name | Department Code | Department Name | Job Class | Job Title    | Birth Date | Hire Date  |  Salary |
+|---------------|-----------|-----------------|-----------------|-----------|--------------|------------|------------|--------:|
+| 1003          | Rainsford | MKTG            | Marketing       | 23        | Sales Agent  | 20/03/1970 | 14/09/2003 | 165,000 |
+| 1006          | Smith     | MIS             | Info Systems    | 27        | Sys. Analyst | 13/12/1990 | 12/01/2002 |  95,000 |
+| 1010          | Thompson  | MKTG            | Marketing       | 23        | Sales Agent  | 19/06/2000 | 12/04/2005 |  76,000 |
+
+For the `Employee_v1` table:
+
+- The candidate key is `Employee Code`.
+- `Employee Code` -> `Last Name`, `Department Code`, `Department Name`, `Job Class`, `Job Title`, `Birth Date`, `Hire Date`, `Salary`
+- The table is in 1NF, as all the columns contain atomic values.
+- The table is not in 2NF, as there are partial dependencies on the candidate key.
+  - `Employee Code` -> `Last Name`, `Birth Date`, `Hire Date`, `Salary`
+  - `Department Code` -> `Department Name`
+  - `Job Class` -> `Job Title` (Assuming based on Column names)
+
+`Education_v1` Table
+
+| Employee Code | Education Code | Education Description | Year Earned |
+|---------------|----------------|-----------------------|------------:|
+| 1003          | SC             | Secondary School      |        1982 |
+| 1003          | BBA            | Bachelor of Business  |        1988 |
+| 1003          | MBA            | Masters Business      |        1993 |
+| 1006          | SC             | Secondary School      |        1972 |
+| 1006          | BSComp         | Bachelor of Computing |        1976 |
+| 1006          | BEd            | Bachelor of Education |        1997 |
+| 1010          | SC             | Secondary School      |        1982 |
+| 1010          | Bed            | Bachelor of Education |        1988 |
+
+For the `Education_v1` table:
+
+- The candidate key is the combination of `Employee Code` and `Education Code`.
+- (`Employee Code`, `Education Code`) -> `Education Description`, `Year Earned`
+- The table is in 1NF, as there are no repeating groups.
+- The table is in 2NF, as there are no partial dependencies.
+- The table is in 3NF, as there are no transitive dependencies.
+
+Breaking the table `Employee_v1`
+
+`Employee_v2` Table
+
+| Employee Code | Last Name | Birth Date | Hire Date  |  Salary | Department Code | Job Class |
+|---------------|-----------|------------|------------|--------:|-----------------|----------:|
+| 1003          | Rainsford | 20/03/1970 | 14/09/2003 | 165,000 | MKTG            |        23 |
+| 1006          | Smith     | 13/12/1990 | 12/01/2002 |  95,000 | MIS             |        27 |
+| 1010          | Thompson  | 19/06/2000 | 12/04/2005 |  76,000 | MKTG            |        23 |
+
+For the `Employee_v2` table:
+
+- The candidate key is `Employee Code`.
+- `Employee Code` -> `Last Name`, `Birth Date`, `Hire Date`, `Salary`, `Department Code`, `Job Class`
+- `Department Code` and `Job Class` are foreign keys to the `Department_v1` and `Job_v1` tables, respectively.
+- The table is in 1NF, as all the columns contain atomic values and there are no repeating groups.
+- The table is in 2NF, as there are no partial dependencies on the candidate key.
+- The table is in 3NF, as there are no transitive dependencies.
+
+`Department_v1` Table
+
+| Department Code | Department Name |
+|-----------------|-----------------|
+| MKTG            | Marketing       |
+| MIS             | Info Systems    |
+
+For the `Department_v1` table:
+
+- The candidate key is `Department Code`.
+- `Department Code` -> `Department Name`
+- The table is in 1NF, as all the columns contain atomic values and there are no repeating groups.
+- The table is in 2NF, as there are no partial dependencies on the candidate key.
+- The table is in 3NF, as there are no transitive dependencies.
+
+`Job_v1` Table
+
+| Job Class | Job Title    |
+|-----------|--------------|
+| 23        | Sales Agent  |
+| 27        | Sys. Analyst |
+
+For the `Job_v1` table:
+
+- The candidate key is `Job Class`.
+- `Job Class` -> `Job Title`
+- The table is in 1NF, as all the columns contain atomic values and there are no repeating groups.
+- The table is in 2NF, as there are no partial dependencies on the candidate key.
+- The table is in 3NF, as there are no transitive dependencies.
+
+The Final Normalized Tables are:
+
+- `Employee_v2` Table
+- `Education_v1` Table
+- `Department_v1` Table
+- `Job_v1` Table
+
 
 ***QUESTION 5 – Structured Query Language   [TOTAL MARKS: 25]*** 
 
@@ -146,11 +291,11 @@ Write a valid SQL statement that would produce a list of vegetables picked by a 
 
 
 
-|**GardenerName**  |**PlantName**   |**Date** |**Amount** |
-| - | - | - | - |
-|Tim |Radish      |2005-07-16 |23 |
-|Tim |Carrot      |2005-08-18 |28 |
-|Tim |Corn        |2005-08-28 |18 |
+| **GardenerName** | **PlantName** | **Date**   | **Amount** |
+|------------------|---------------|------------|------------|
+| Tim              | Radish        | 2005-07-16 | 23         |
+| Tim              | Carrot        | 2005-08-18 | 28         |
+| Tim              | Corn          | 2005-08-28 | 18         |
 
 **Q 5 (f)  [4 Marks]** 
 
@@ -158,12 +303,12 @@ Write a valid SQL statement that would produce a result set which would include 
 
 
 
-|**PlantName**  |**LocationName**   |**Needed** |**Available** |**variance** |
-| - | - | - | - | - |
-|Carrot |East   |0\.82 |0\.8 |-0.02 |
-|Carrot |West      |0\.82 |0\.48 |-0.34 |
-|Carrot |North        |0\.82 |0\.84 |0\.02 |
-|Carrot |South |0\.82 |0\.66 |-0.16 |
+| **PlantName** | **LocationName** | **Needed** | **Available** | **variance** |
+|---------------|------------------|------------|---------------|--------------|
+| Carrot        | East             | 0\.82      | 0\.8          | -0.02        |
+| Carrot        | West             | 0\.82      | 0\.48         | -0.34        |
+| Carrot        | North            | 0\.82      | 0\.84         | 0\.02        |
+| Carrot        | South            | 0\.82      | 0\.66         | -0.16        |
 
 **Q 5 (g)  [5 Marks]** 
 
@@ -181,20 +326,19 @@ Winter Examinations 2021/2022   Page 8 of 12
 
 This UNF table refers to question 4 of your exam paper.  
 
+| **Employee Code** | **Last Name** | **Education Code** | **Education Description** | **Year Earned** | **Department Code** | **Department Name** | **Job Class** | **Job  Title** | **Birth Date** | **Hire Date** | **Salary** |
+|:------------------|:--------------|:-------------------|:--------------------------|:----------------|:--------------------|:--------------------|:--------------|----------------|----------------|---------------|------------|
+| 1003              | Rainsford     | SC                 | Secondary School          | 1982            | MKTG                | Marketing           | 23            | Sales Agent    | 20/03/1970     | 14/09/2003    | 165,000    |
+|                   |               | BBA                | Bachelor of Business      | 1988            |                     |                     |               |                |                |               |            |
+|                   |               | MBA                | Masters Business          | 1993            |                     |                     |               |                |                |               |            |
+|                   |               |                    |                           |                 |                     |                     |               |                |                |               |            |
+| 1006              | Smith         | SC                 | Secondary School          | 1972            | MIS                 | Info Systems        | 27            | Sys. Analyst   | 13/12/1990     | 12/01/2002    | 95,000     |
+|                   |               | BSComp             | Bachelor of  Computing    | 1976            |                     |                     |               |                |                |               |            |
+|                   |               | BEd                | Bachelor of  Education    | 1997            |                     |                     |               |                |                |               |            |
+|                   |               |                    |                           |                 |                     |                     |               |                |                |               |            |
+| 1010              | Thompson      | SC                 | Secondary School          | 1982            | MKTG                | Marketing           | 23            | Sales Agent    | 19/06/2000     | 12/04/2005    | 76,000     |
+|                   |               | Bed                | Bachelor of  Education    | 1988            |                     |                     |               |                |                |               |            |
 
-
-|**Employee Code** |**Last Name** |**Education Code** |**Education Description** |**Year Earned** |**Department Code** |**Department Name** |**Job Class** |**Job  Title** |**Birth Date** |**Hire Date** |**Salary** |
-| :- | :- | :- | :- | :- | :- | :- | :- | - | - | - | - |
-|1003 |Rainsford |SC |Secondary School |1982 |MKTG |Marketing |23 |Sales Agent |20/03/1970 |14/09/2003 |165,000 |
-|||BBA |Bachelor of Business |1988 ||||||||
-|||MBA |Masters Business |1993 ||||||||
-|||||||||||||
-|1006 |Smith |SC |Secondary School |1972 |MIS |Info Systems |27 |Sys. Analyst |13/12/1990 |12/01/2002 |95,000 |
-|||BSComp |Bachelor of  Computing |1976 ||||||||
-|||BEd |Bachelor of  Education |1997 ||||||||
-|||||||||||||
-|1010 |Thompson |SC |Secondary School |1982 |MKTG |Marketing |23 |Sales Agent |19/06/2000 |12/04/2005 |76,000 |
-|||Bed |Bachelor of  Education |1988 ||||||||
 COMP06043 – Databases for Project 
 
 Winter Examinations 2021/2022   Page 9 of 11 
@@ -210,12 +354,12 @@ The Gardener relation outlines the details of each gardener in the family.
 
 
 
-|**GardenerID** |**Name** |**Age** |
-| - | - | - |
-|0 |Mother |36 |
-|1 |Father |38 |
-|2 |Tim |15 |
-|3 |Erin |12 |
+| **GardenerID** | **Name** | **Age** |
+|----------------|----------|---------|
+| 0              | Mother   | 36      |
+| 1              | Father   | 38      |
+| 2              | Tim      | 15      |
+| 3              | Erin     | 12      |
 
 **Relation: PLANT** 
 
@@ -223,13 +367,13 @@ The Plant relation outlines the details of each plant their sunlight, weight, an
 
 
 
-|**PlantID** |**Name** |**Sunlight** |**Water** |**Weight** |
-| - | - | - | - | - |
-|0 |Carrot |0\.26 |0\.82 |0\.08 |
-|1 |Beet |0\.44 |0\.80 |0\.04 |
-|2 |Corn |0\.44 |0\.76 |0\.26 |
-|3 |Tomato |0\.42 |0\.80 |0\.16 |
-|4 |Radish |0\.28 |0\.84 |0\.02 |
+| **PlantID** | **Name** | **Sunlight** | **Water** | **Weight** |
+|-------------|----------|--------------|-----------|------------|
+| 0           | Carrot   | 0\.26        | 0\.82     | 0\.08      |
+| 1           | Beet     | 0\.44        | 0\.80     | 0\.04      |
+| 2           | Corn     | 0\.44        | 0\.76     | 0\.26      |
+| 3           | Tomato   | 0\.42        | 0\.80     | 0\.16      |
+| 4           | Radish   | 0\.28        | 0\.84     | 0\.02      |
 
 **Relation: LOCATION** 
 
@@ -237,12 +381,12 @@ The Location relation outlines details of each location in the garden and the su
 
 
 
-|**LocationID** |**Name** |**Sunlight** |**Water** |
-| - | - | - | - |
-|0 |East |0\.28 |0\.80 |
-|1 |North |0\.17 |0\.84 |
-|2 |West |0\.38 |0\.48 |
-|3 |South |0\.45 |0\.66 |
+| **LocationID** | **Name** | **Sunlight** | **Water** |
+|----------------|----------|--------------|-----------|
+| 0              | East     | 0\.28        | 0\.80     |
+| 1              | North    | 0\.17        | 0\.84     |
+| 2              | West     | 0\.38        | 0\.48     |
+| 3              | South    | 0\.45        | 0\.66     |
 
 **Relation: PLANTED** 
 
@@ -250,15 +394,15 @@ The Planted relation outlines details of each plant, planted by a gardener in a 
 
 
 
-|**PlantID** |**GardenerID** |**LocationID** |**Date** |**Seeds** |
-| - | - | - | - | - |
-|0 |0 |0 |04-18-2005 |28 |
-|0 |1 |1 |04-14-2005 |14 |
-|1 |0 |2 |04-18-2005 |36 |
-|2 |1 |3 |04-14-2005 |20 |
-|2 |2 |2 |04-19-2005 |12 |
-|3 |3 |3 |04-25-2005 |38 |
-|4 |2 |0 |04-30-2005 |30 |
+| **PlantID** | **GardenerID** | **LocationID** | **Date**   | **Seeds** |
+|-------------|----------------|----------------|------------|-----------|
+| 0           | 0              | 0              | 04-18-2005 | 28        |
+| 0           | 1              | 1              | 04-14-2005 | 14        |
+| 1           | 0              | 2              | 04-18-2005 | 36        |
+| 2           | 1              | 3              | 04-14-2005 | 20        |
+| 2           | 2              | 2              | 04-19-2005 | 12        |
+| 3           | 3              | 3              | 04-25-2005 | 38        |
+| 4           | 2              | 0              | 04-30-2005 | 30        |
 
 - PlantID is a Foreign Key references the PlantID in the Plant Relation 
 - GardenerID is a Foreign Key references the GardenerID in the Gardener Relation 
@@ -270,14 +414,14 @@ The Picked relation outlines details of each plant picked by a gardener in a spe
 
 
 
-|**PlantID** |**GardenerID** |**LocationID** |**Date** |**Amount** |**Weight** |
-| - | - | - | - | - | - |
-|0 |2 |0 |08-18-2005 |28 |2\.32 |
-|0 |3 |1 |08-16-2005 |12 |1\.02 |
-|2 |1 |3 |08-22-2005 |52 |12\.96 |
-|2 |2 |2 |08-28-2005 |18 |4\.58 |
-|3 |3 |3 |08-22-2005 |15 |3\.84 |
-|4 |2 |0 |07-16-2005 |23 |0\.52 |
+| **PlantID** | **GardenerID** | **LocationID** | **Date**   | **Amount** | **Weight** |
+|-------------|----------------|----------------|------------|------------|------------|
+| 0           | 2              | 0              | 08-18-2005 | 28         | 2\.32      |
+| 0           | 3              | 1              | 08-16-2005 | 12         | 1\.02      |
+| 2           | 1              | 3              | 08-22-2005 | 52         | 12\.96     |
+| 2           | 2              | 2              | 08-28-2005 | 18         | 4\.58      |
+| 3           | 3              | 3              | 08-22-2005 | 15         | 3\.84      |
+| 4           | 2              | 0              | 07-16-2005 | 23         | 0\.52      |
 
 - PlantID is a Foreign Key references the PlantID in the Plant Relation 
 - GardenerID is a Foreign Key references the GardenerID in the Gardener Relation 
