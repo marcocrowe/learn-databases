@@ -287,7 +287,10 @@ CREATE TABLE `Location` (
 
 Write a SQL statement to add an onion plant to the PLANT table. Values for the attributes are as follows:
 
-PlantID = 5 Name = Onion Sunlight 0.45 Water = 0.74
+PlantID = 5 
+Name = Onion
+Sunlight 0.45
+Water = 0.74
 
 ### Answer 5.B
 
@@ -298,29 +301,66 @@ VALUES (5, 'Onion', 0.45, 0.74);
 
 ### Question 5.C (3 Marks)
 
-Write  a  valid  SQL  statement  that  calculates  the  total  weight  of  all  ears  of  corn (PlantID=2) that were picked from the garden: 
+Write a valid SQL  statement  that  calculates  the  total  weight  of  all  ears of  corn (PlantID=2) that were picked from the garden:
 
-**Q 5(d)  [3 Marks]** 
+### Answer 5.C
 
-Write a valid SQL statement that shows for each plant picked the Plant name and picked weight in pounds.  Using multiplicative conversion factor of 2.2 to convert kilograms to pounds  
+```sql
+SELECT 
+    SUM(`Weight` * `Amount`) AS `Total Weight`
+FROM 
+    `Picked`
+WHERE
+    `PlantId` = 2;
+```
 
-**Q 5(e)  [4 Marks]** 
+### Question 5.D (3 Marks)
 
-Write a valid SQL statement that would produce a list of vegetables picked by a particular gardener (gardenerID =2), the date picked, and amount picked. The result should output the following: 
+Write a valid SQL statement that shows for each plant picked the Plant name and picked weight in pounds. Using multiplicative conversion factor of 2.2 to convert kilograms to pounds
 
+### Answer 5.D
 
+```sql
+SELECT 
+    `Plant`.`Name` AS `Plant Name`,
+    SUM(`Picked`.`Weight`) * 2.2 AS `Picked Weight (lbs)`
+FROM
+    `Plant`
+INNER JOIN
+    `Picked` ON `Plant`.`PlantId` = `Picked`.`PlantId`
+GROUP BY
+    `Plant`.`Name`;
+```
 
-| **GardenerName** | **PlantName** | **Date**   | **Amount** |
-|------------------|---------------|------------|------------|
-| Tim              | Radish        | 2005-07-16 | 23         |
-| Tim              | Carrot        | 2005-08-18 | 28         |
-| Tim              | Corn          | 2005-08-28 | 18         |
+### Question 5.E (4 Marks)
 
-**Q 5 (f)  [4 Marks]** 
+Write a valid SQL statement that would produce a list of vegetables picked by a particular gardener (gardenerID =2), the date picked, and amount picked. The result should output the following:
 
-Write a valid SQL statement that would produce a result set which would include the plant name, location name, the amount of water the plant needs (needed), the water available in a location (available) and variance which is the difference between location water and plant water for the plant Carrot. The output should look like the following: 
+| GardenerName | PlantName | Date       | Amount |
+|--------------|-----------|------------|--------|
+| Tim          | Radish    | 2005-07-16 | 23     |
+| Tim          | Carrot    | 2005-08-18 | 28     |
+| Tim          | Corn      | 2005-08-28 | 18     |
 
+```sql
+SELECT 
+    G.`Name` AS `GardenerName`,
+    PL.`Name` AS `PlantName`,
+    P.`Date` AS `Date`,
+    P.`Amount` AS `Amount`
+FROM
+    `Gardener` G
+INNER JOIN
+    `Picked` P ON G.`GardenerId` = P.`GardenerId`
+INNER JOIN
+    `Plant` PL ON P.`PlantId` = PL.`PlantId`
+WHERE
+    G.`GardenerId` = 2;
+```
 
+### Question 5.F (4 Marks)
+
+Write a valid SQL statement that would produce a result set which would include the plant name, location name, the amount of water the plant needs (needed), the water available in a location (available) and variance which is the difference between location water and plant water for the plant Carrot. The output should look like the following:
 
 | **PlantName** | **LocationName** | **Needed** | **Available** | **variance** |
 |---------------|------------------|------------|---------------|--------------|
